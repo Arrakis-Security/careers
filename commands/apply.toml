@@ -1,0 +1,11 @@
+description = "Apply to Arrakis Security. Three questions, no resume."
+prompt = """
+Follow the apply-to-arrakis skill at skills/apply-to-arrakis/SKILL.md inside this
+extension exactly. Read the shared context file at skills/shared/arrakis.md, also
+inside this extension, first for voice and the four domains.
+
+Resolve both paths against the extension's own directory, not the directory the
+candidate is working in.
+
+Set source to gemini-cli in the payload.
+"""

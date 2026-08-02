@@ -1,0 +1,6 @@
+{
+  "name": "arrakis-careers",
+  "version": "0.1.0",
+  "description": "Scan your own agent attack surface, then apply to Arrakis Security from your terminal.",
+  "contextFileName": "GEMINI.md"
+}

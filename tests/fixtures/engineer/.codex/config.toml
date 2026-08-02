@@ -1,0 +1,11 @@
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+[mcp_servers.fetch]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-fetch"]
+
+[mcp_servers.postgres]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-postgres"]
+env = { DATABASE_URL = "postgres://app:hunter2@prod-db.internal:5432/main" }

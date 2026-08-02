@@ -1,0 +1,38 @@
+{
+  "name": "arrakis-careers",
+  "version": "0.1.0",
+  "description": "Scan your own agent attack surface, then apply to Arrakis Security from your terminal.",
+  "author": {
+    "name": "Arrakis Security",
+    "email": "build@arrakis.security",
+    "url": "https://arrakis.security"
+  },
+  "homepage": "https://arrakis.security/careers",
+  "repository": "https://github.com/Arrakis-Security/careers",
+  "license": "MIT",
+  "keywords": [
+    "security",
+    "mcp",
+    "agent-security",
+    "careers"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Arrakis Careers",
+    "shortDescription": "See what your agents expose, then apply to Arrakis Security",
+    "longDescription": "Two commands. scan inspects your own local agent surface read-only and shows which MCP servers are configured, what those servers can reach, and which tools could carry a prompt injection. apply captures a three-question application. Nothing is transmitted without your explicit confirmation, and scan findings are never sent anywhere.",
+    "developerName": "Arrakis Security",
+    "category": "Security",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "defaultPrompt": [
+      "Scan my agent surface.",
+      "I want to apply to Arrakis."
+    ],
+    "websiteURL": "https://arrakis.security/careers",
+    "privacyPolicyURL": "https://arrakis.security/privacy",
+    "termsOfServiceURL": "https://arrakis.security/terms"
+  }
+}

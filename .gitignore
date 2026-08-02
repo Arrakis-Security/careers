@@ -1,0 +1,6 @@
+.DS_Store
+.context/
+docs/
+
+# A candidate's own application, if anyone runs `apply` inside this repo.
+arrakis-application-*.md

@@ -1,0 +1,20 @@
+{
+  "name": "arrakis",
+  "description": "Arrakis Security plugins",
+  "owner": {
+    "name": "Arrakis Security",
+    "email": "build@arrakis.security"
+  },
+  "plugins": [
+    {
+      "name": "arrakis-careers",
+      "description": "Scan your own agent attack surface, then apply to Arrakis Security from your terminal.",
+      "version": "0.1.0",
+      "source": "./",
+      "author": {
+        "name": "Arrakis Security",
+        "email": "build@arrakis.security"
+      }
+    }
+  ]
+}

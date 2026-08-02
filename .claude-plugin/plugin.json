@@ -1,0 +1,20 @@
+{
+  "name": "arrakis-careers",
+  "description": "Scan your own agent attack surface, then apply to Arrakis Security from your terminal. Read-only, local-only, no resume.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Arrakis Security",
+    "email": "build@arrakis.security"
+  },
+  "homepage": "https://arrakis.security/careers",
+  "repository": "https://github.com/Arrakis-Security/careers",
+  "license": "MIT",
+  "keywords": [
+    "security",
+    "mcp",
+    "agent-security",
+    "prompt-injection",
+    "careers",
+    "hiring"
+  ]
+}

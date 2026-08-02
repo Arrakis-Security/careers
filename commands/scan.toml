@@ -1,0 +1,11 @@
+description = "Scan your local agent surface. Read-only, local-only, transmits nothing."
+prompt = """
+Follow the agent-surface-scan skill at skills/agent-surface-scan/SKILL.md inside
+this extension exactly, including its references. Read the shared context file at
+skills/shared/arrakis.md, also inside this extension, first for voice.
+
+Resolve both paths against the extension's own directory, not the directory the
+candidate is working in.
+
+Do not use any network tool during this scan.
+"""
