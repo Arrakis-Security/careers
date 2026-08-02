@@ -36,10 +36,15 @@ No dependencies. Nothing to build. Nothing runs at install time.
 
 ## Use
 
+In Claude Code, the commands are namespaced:
+
 ```
-/scan     # what your agents expose. read-only, local-only, sends nothing.
-/apply    # three questions, no résumé.
+/arrakis-careers:scan     # what your agents expose. read-only, sends nothing.
+/arrakis-careers:apply    # three questions, no résumé.
 ```
+
+In Codex and Antigravity, just ask — "scan my agent surface" or "apply to
+Arrakis" — and the skill fires.
 
 `scan` inspects your own machine: which MCP servers your agents are configured
 with, what those servers can reach, how broad the credential and filesystem
