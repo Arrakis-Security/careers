@@ -30,8 +30,14 @@ latter for Codex's own metadata and its `skills` pointer.
 
 - [ ] `/plugin marketplace add Arrakis-Security/careers`
 - [ ] `/plugin install arrakis-careers@arrakis`
-- [ ] `/scan` runs and produces ranked output
-- [ ] `/apply` runs, shows the payload, writes the file
+- [ ] `/arrakis-careers:scan` runs and produces ranked output
+- [ ] `/arrakis-careers:apply` runs, shows the payload, writes the file
+
+Claude Code namespaces plugin commands. Bare `/scan` returns
+`Unknown command: /scan`; `/arrakis-careers:scan` works. Verified 2026-08-02, and
+the same run against a real machine correctly found project-scoped entries in
+`~/.claude.json` with no top-level `mcpServers` key, and said out loud that it
+enumerated that file by key search rather than reading all of it.
 
 ## Public repo — Codex
 
@@ -62,8 +68,5 @@ one, but adding it makes `agy` double-count: it picks up both the `.md` and
 Gemini CLI proper is untested — we ship the manifest it would use, but no
 command for it is advertised.
 
-## Command namespace
-
-- [ ] Confirm in a real session whether the commands are `/scan` and `/apply` or
-      namespaced as `/arrakis-careers:scan` and `/arrakis-careers:apply`, and
-      make `README.md` say whichever is true
+- [x] Command namespace confirmed: `/arrakis-careers:scan` and
+      `/arrakis-careers:apply`. `README.md` says so.
