@@ -1,0 +1,12 @@
+# This plugin has no runtime dependencies — it is markdown. The only dependency
+# surface is the GitHub Actions we pin, so that is the only ecosystem here.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"
+    labels: ["ci", "dependencies"]

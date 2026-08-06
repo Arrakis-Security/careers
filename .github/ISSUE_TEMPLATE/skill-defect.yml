@@ -1,0 +1,40 @@
+name: Scan or application defect
+description: The scan was wrong, or the application behaved unexpectedly.
+labels: ["defect"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        If the defect is that something leaked — a value printed, a path read, a
+        finding transmitted — do not file this publicly. Use
+        [private reporting](https://github.com/Arrakis-Security/careers/security/advisories/new)
+        or mail build@arrakis.security.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What went wrong
+      options:
+        - The scan claimed a capability that does not exist
+        - The scan ranked something too high or too low
+        - The scan missed something it should have found
+        - Output format or voice was wrong
+        - The application lost or mangled an answer
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what you got
+      description: >-
+        Describe the shape of the config that triggered it. A minimal redacted
+        fixture is ideal; a real config is never wanted.
+    validations:
+      required: true
+  - type: checkboxes
+    id: hygiene
+    attributes:
+      label: Confirm
+      options:
+        - label: This report contains no credential, no token, and no real config
+          required: true

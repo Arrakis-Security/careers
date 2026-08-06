@@ -28,34 +28,37 @@ latter for Codex's own metadata and its `skills` pointer.
 
 ## Public repo — Claude Code
 
-- [ ] `/plugin marketplace add Arrakis-Security/careers`
-- [ ] `/plugin install arrakis-careers@arrakis`
-- [ ] `/arrakis-careers:scan` runs and produces ranked output
-- [ ] `/arrakis-careers:apply` runs, shows the payload, writes the file
+- [x] `/plugin marketplace add Arrakis-Security/careers`
+- [x] `/plugin install arrakis-careers@arrakis`
+- [x] `/arrakis-careers:scan` runs and produces ranked output
+- [x] `/arrakis-careers:apply` runs, shows the payload, writes the file
 
 Claude Code namespaces plugin commands. Bare `/scan` returns
-`Unknown command: /scan`; `/arrakis-careers:scan` works. Verified 2026-08-02, and
-the same run against a real machine correctly found project-scoped entries in
+`Unknown command: /scan`; `/arrakis-careers:scan` works. Verified against the
+public repository on 2026-08-06, Claude Code 2.1.143, and the same run against a
+real machine correctly found project-scoped entries in
 `~/.claude.json` with no top-level `mcpServers` key, and said out loud that it
 enumerated that file by key search rather than reading all of it.
 
 ## Public repo — Codex
 
-- [ ] `codex plugin marketplace add Arrakis-Security/careers`
-- [ ] `codex plugin add arrakis-careers@arrakis`
-- [ ] The scan runs and produces ranked output
-- [ ] Apply runs, shows the payload, writes the file
+- [x] `codex plugin marketplace add Arrakis-Security/careers`
+- [x] `codex plugin add arrakis-careers@arrakis`
+- [x] The scan runs and produces ranked output
+- [x] Apply runs, shows the payload, writes the file
+
+Verified against the public repository on 2026-08-06, codex-cli 0.144.1.
 
 ## Public repo — Antigravity
 
-- [ ] `agy plugin install https://github.com/Arrakis-Security/careers`
-- [ ] `agy plugin list` shows `arrakis-careers`
-- [ ] The scan runs and produces ranked output
-- [ ] Apply runs, shows the payload, writes the file
+- [x] `agy plugin install https://github.com/Arrakis-Security/careers`
+- [x] `agy plugin list` shows `arrakis-careers`
+- [x] The scan runs and produces ranked output
+- [x] Apply runs, shows the payload, writes the file
 
-Verified from a local directory against Antigravity 1.1.9: install succeeds,
-`agy plugin list` reports the plugin with `"source": "gemini-cli"`, and the scan
-produces correct ranked output on the empty fixture.
+Verified against the public repository on 2026-08-06, Antigravity 1.1.9: install
+succeeds, `agy plugin list` reports the plugin with `"source": "gemini-cli"`, and
+the scan produces correct ranked output.
 
 `agy` reads `gemini-extension.json`, so that manifest and `GEMINI.md` are
 load-bearing for this platform — do not remove them as unused.
@@ -70,3 +73,15 @@ command for it is advertised.
 
 - [x] Command namespace confirmed: `/arrakis-careers:scan` and
       `/arrakis-careers:apply`. `README.md` says so.
+
+## Guardrails (run on every pull request)
+
+```bash
+python3 scripts/validate_manifests.py
+python3 scripts/check_tree.py
+python3 scripts/check_content_safety.py
+bash    scripts/selftest_guardrails.sh
+```
+
+The last one injects fourteen known-bad changes into a scratch copy and asserts
+each is rejected. A check that has never refused anything is not a check.

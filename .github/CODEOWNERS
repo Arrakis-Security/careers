@@ -1,0 +1,31 @@
+# Every file in this repository is executed by somebody else's coding agent on
+# their own laptop. There is no such thing as a cosmetic change here, so there is
+# no path without an owner.
+#
+# `@Arrakis-Security/security` is Arrakis Security staff only. Outside
+# contributors open pull requests from forks; only this team can approve them.
+#
+# This file is inert on its own. It becomes an enforced rule via the branch
+# ruleset described in docs/GITHUB-SETTINGS.md — "Require review from Code
+# Owners", with an empty bypass list.
+
+*                       @Arrakis-Security/security
+
+# The prompt surface: the files that actually run on a candidate's machine.
+# Listed explicitly, even though the wildcard above already covers them, so that
+# a diff touching them is visibly a different class of change from a doc typo.
+/skills/                @Arrakis-Security/security
+/commands/              @Arrakis-Security/security
+/AGENTS.md              @Arrakis-Security/security
+/GEMINI.md              @Arrakis-Security/security
+
+# Trust and supply-chain surface. A change here can switch the guardrails off.
+# When there is a second staff team, make it a co-owner of these paths so
+# disarming a check needs two people rather than one.
+/.github/               @Arrakis-Security/security
+/scripts/               @Arrakis-Security/security
+/SECURITY.md            @Arrakis-Security/security
+/LICENSE                @Arrakis-Security/security
+/.claude-plugin/        @Arrakis-Security/security
+/.codex-plugin/         @Arrakis-Security/security
+/gemini-extension.json  @Arrakis-Security/security
