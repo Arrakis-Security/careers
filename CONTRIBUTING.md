@@ -37,8 +37,10 @@ All three run in CI on your pull request. They need nothing but Python 3.
 secret path, a shell, or an instruction override — including lines that *prohibit*
 those things, which is most of the existing ones. That is deliberate. Every such
 line is recorded in [`.github/allowed-lines.txt`](.github/allowed-lines.txt) by
-the hash of its exact text, so rewording one puts it back in front of a human. If
-your change is legitimate, run:
+the hash of its exact text *and the file it appears in*, so rewording one — or
+moving it to another skill — puts it back in front of a human. The check reads
+every file under `skills/` and `commands/`, not just the markdown ones. If your
+change is legitimate, run:
 
 ```bash
 python3 scripts/check_content_safety.py --hashes

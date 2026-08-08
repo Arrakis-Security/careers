@@ -107,9 +107,13 @@ something else tomorrow is separate, so here it is:
   [scripts/check_content_safety.py](scripts/check_content_safety.py), which fails
   any new line in the prompt surface that mentions a network verb, a secret store
   path, a shell, or an instruction override until a maintainer records that exact
-  line by hash. It also rejects invisible characters, non-Latin lookalikes, and
-  base64 blobs. `SUBMIT_ENABLED = false` is one of the invariants it enforces, so
-  switching submission on cannot happen quietly.
+  line, in that exact file, by hash. The prompt surface means every file under
+  `skills/` and `commands/` whatever its extension, since a skill can point an
+  agent at any file it likes. It also rejects invisible characters, non-Latin
+  lookalikes, and base64 blobs. `SUBMIT_ENABLED = false` is one of the invariants
+  it enforces — checked at *every* assignment in the file, not just the presence
+  of a correct one — so switching submission on cannot happen quietly, by edit or
+  by append.
 - Our own threat model, including what we think the most likely attack on this
   repository is, is in [docs/THREAT-MODEL.md](docs/THREAT-MODEL.md). The exact
   GitHub settings behind the paragraphs above are listed in
