@@ -83,8 +83,10 @@ Overclaiming. A README that says "verified" against a version we only tested
 locally, a severity tier inflated to make a demo land, an install command
 published before its box is ticked. This costs more than a vulnerability would:
 the audience is people who check, and one caught exaggeration ends the
-conversation. `tests/INSTALL-CHECKLIST.md` exists for this, and no claim ships
-ahead of its tick.
+conversation. The rule for this: a verification claim names the version, the
+date, and the run that backs it, in the pull request that makes the claim. A
+claim nobody can trace to a run does not ship — and when only part of a set was
+verified, the README says which part, rather than rounding up to all of it.
 
 ## Explicitly out of scope
 

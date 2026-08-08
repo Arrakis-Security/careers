@@ -161,6 +161,6 @@ Ten minutes, and it catches the drift that undoes all of the above:
 - [ ] Actions still cannot approve pull requests
 - [ ] Fork workflow approval still "all external contributors"
 - [ ] `main` still requires the `guardrails` check by that exact name
-- [ ] Every published install command still matches a ticked box in
-      `tests/INSTALL-CHECKLIST.md`
+- [ ] Every published install command still runs against the public repository,
+      at the version the README names
 - [ ] Latest release tag is signed, and the README pins to a tag that exists

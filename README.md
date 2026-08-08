@@ -28,12 +28,12 @@ codex plugin add arrakis-careers@arrakis
 agy plugin install https://github.com/Arrakis-Security/careers
 ```
 
-All three are verified against this repository — not a local checkout — on
-2026-08-06: Claude Code 2.1.143, codex-cli 0.144.1, Antigravity 1.1.9. Every
-command above corresponds to a ticked box in
-[tests/INSTALL-CHECKLIST.md](tests/INSTALL-CHECKLIST.md), and nothing is
-advertised here before its box is ticked. If one fails for you, mail
-build@arrakis.security and we will fix it fast.
+The Claude Code command is verified against this repository — not a local
+checkout — on 2026-08-06, Claude Code 2.1.143. The Codex and Antigravity
+commands come from testing against a local checkout and have not been re-run
+against the public repository. We would rather name the gap than let a command
+that returns "plugin not found" be your first impression. If one fails for you,
+mail build@arrakis.security and we will fix it fast.
 
 No dependencies. Nothing to build. Nothing runs at install time.
 

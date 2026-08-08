@@ -37,10 +37,10 @@ can pin to and a reviewer can point at.
    including every "must never appear" line. Paste the outputs in the release pull
    request.
 
-4. **Re-verify the install commands you publish** against
-   `tests/INSTALL-CHECKLIST.md`. Any command whose box is not ticked against the
-   public repository does not appear in the README. Update the version numbers the
-   README claims verification against.
+4. **Re-run every install command you publish** against the public repository,
+   not a local checkout, and paste the runs in the release pull request. A
+   command nobody re-ran does not appear in the README as verified. Update the
+   version numbers the README claims verification against.
 
 5. **Tag, signed and annotated:**
 

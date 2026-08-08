@@ -55,9 +55,10 @@ This is the code-execution surface. For each added or changed sentence, ask:
 
 - [ ] Version changed in all four manifests and in the payload `plugin_version`.
       CI checks this.
-- [ ] No published install command lacks a ticked box in
-      `tests/INSTALL-CHECKLIST.md`. A command that returns "plugin not found" is
-      worse than no command.
+- [ ] Every install command the README publishes has been run against the public
+      repository, at the version the README names, and the pull request says who
+      ran it and when. A command that returns "plugin not found" is worse than
+      no command.
 - [ ] Version claims in the README name versions someone actually ran.
 
 ## If it touches `.github/` or `scripts/`
