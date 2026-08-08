@@ -57,7 +57,12 @@ jobs:
       - name: No workflow may hold write scope or read a secret
         run: |
           set -euo pipefail
-          if grep -rn 'secrets\.' .github/workflows/ | grep -v 'GITHUB_TOKEN'; then
+          # Match a real expression interpolation, not the word in prose: the
+          # header comment above ends a sentence with "repository secrets." and
+          # the older bare pattern failed this job on its own documentation.
+          # Keep this comment free of the literal syntax, for the same reason.
+          if grep -rnE '\$\{\{[^}]*secrets\.' .github/workflows/ \
+              | grep -v 'secrets\.GITHUB_TOKEN'; then
             echo "a workflow references a secret — not permitted here"
             exit 1
           fi
