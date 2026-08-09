@@ -1,6 +1,9 @@
 .DS_Store
 .context/
-docs/
 
 # A candidate's own application, if anyone runs `apply` inside this repo.
 arrakis-application-*.md
+
+# Note: `docs/` used to be ignored here. It is now tracked on purpose — the
+# threat model, review checklist, settings runbook, and release process are part
+# of what makes this repository auditable. Keep working notes in `.context/`.

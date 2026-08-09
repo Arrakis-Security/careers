@@ -1,0 +1,42 @@
+name: Install or command problem
+description: A documented install command or slash command does not work.
+labels: ["install"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not paste your agent configuration, your scan output, or any file
+        containing credentials. We do not need them and we do not want them.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Claude Code
+        - Codex
+        - Antigravity
+        - Gemini CLI
+        - other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: CLI version
+      placeholder: "codex-cli 0.144.1"
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: The command you ran
+      placeholder: "/plugin install arrakis-careers@arrakis"
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: What happened
+      description: The error text, verbatim. Redact anything machine-specific.
+    validations:
+      required: true

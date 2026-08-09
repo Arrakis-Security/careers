@@ -1,0 +1,31 @@
+# Every file in this repository is executed by somebody else's coding agent on
+# their own laptop. There is no such thing as a cosmetic change here, so there is
+# no path without an owner.
+#
+# `@Arrakis-Security/careers-maintainers` is Arrakis Security staff only. Outside
+# contributors open pull requests from forks; only this team can approve them.
+#
+# This file is inert on its own. It becomes an enforced rule via the branch
+# ruleset described in docs/GITHUB-SETTINGS.md — "Require review from Code
+# Owners", with an empty bypass list.
+
+*                       @Arrakis-Security/careers-maintainers
+
+# The prompt surface: the files that actually run on a candidate's machine.
+# Listed explicitly, even though the wildcard above already covers them, so that
+# a diff touching them is visibly a different class of change from a doc typo.
+/skills/                @Arrakis-Security/careers-maintainers
+/commands/              @Arrakis-Security/careers-maintainers
+/AGENTS.md              @Arrakis-Security/careers-maintainers
+/GEMINI.md              @Arrakis-Security/careers-maintainers
+
+# Trust and supply-chain surface. A change here can switch the guardrails off.
+# When there is a second staff team, make it a co-owner of these paths so
+# disarming a check needs two people rather than one.
+/.github/               @Arrakis-Security/careers-maintainers
+/scripts/               @Arrakis-Security/careers-maintainers
+/SECURITY.md            @Arrakis-Security/careers-maintainers
+/LICENSE                @Arrakis-Security/careers-maintainers
+/.claude-plugin/        @Arrakis-Security/careers-maintainers
+/.codex-plugin/         @Arrakis-Security/careers-maintainers
+/gemini-extension.json  @Arrakis-Security/careers-maintainers

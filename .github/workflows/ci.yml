@@ -1,0 +1,74 @@
+# Guardrails for a repository whose content executes on other people's machines.
+#
+# Design constraints, deliberately:
+#   * The `pull_request` trigger only, never the privileged `_target` variant — a
+#     fork's diff never runs with write scope or repository secrets.
+#   * Read-only token, no secrets used by any job.
+#   * One third-party action, pinned to a full commit SHA. Everything else is the
+#     Python already on the runner.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  guardrails:
+    name: guardrails
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the pull request head, with no credentials
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Manifests, versions, and links
+        run: python3 scripts/validate_manifests.py
+
+      - name: Tree hygiene
+        run: python3 scripts/check_tree.py
+
+      - name: Content safety of the prompt surface
+        run: python3 scripts/check_content_safety.py
+
+      - name: The guardrails still reject what they claim to reject
+        run: bash scripts/selftest_guardrails.sh
+
+      - name: Fixtures still contain the values redaction is tested against
+        run: |
+          set -euo pipefail
+          for f in tests/fixtures/*/EXPECTED.md; do
+            test -s "$f" || { echo "empty expectation: $f"; exit 1; }
+          done
+          grep -q 'ghp_' tests/fixtures/engineer/.claude.json
+          grep -q 'AKIA' tests/fixtures/secrets/.claude.json
+          echo "fixtures: ok"
+
+      - name: No workflow may hold write scope or read a secret
+        run: |
+          set -euo pipefail
+          # Match a real expression interpolation, not the word in prose: the
+          # header comment above ends a sentence with "repository secrets." and
+          # the older bare pattern failed this job on its own documentation.
+          # Keep this comment free of the literal syntax, for the same reason.
+          if grep -rnE '\$\{\{[^}]*secrets\.' .github/workflows/ \
+              | grep -v 'secrets\.GITHUB_TOKEN'; then
+            echo "a workflow references a secret — not permitted here"
+            exit 1
+          fi
+          if grep -rnE '^[[:space:]]*pull_request_target[[:space:]]*:' \
+              .github/workflows/; then
+            echo "the privileged pull_request trigger variant is not permitted"
+            exit 1
+          fi
+          echo "workflow scope: ok"

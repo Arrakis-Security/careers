@@ -1,0 +1,10 @@
+# This repository is text that people are asked to read. Normalise it so a diff
+# never differs by line ending, and never let a file arrive as opaque binary.
+* text=auto eol=lf
+
+*.md    text diff=markdown
+*.json  text
+*.toml  text
+*.yml   text
+*.py    text diff=python
+*.sh    text

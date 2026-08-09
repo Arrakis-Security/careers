@@ -1,0 +1,42 @@
+# Reviewed lines on the prompt surface.
+#
+# scripts/check_content_safety.py fails any line under skills/ or commands/ (plus
+# AGENTS.md and GEMINI.md) that matches a high-risk pattern — network verbs,
+# secret store paths, shell execution, write or delete verbs, instruction
+# overrides — unless the exact text of that line is recorded here.
+#
+# Every file under those directories is read, whatever its extension: a skill can
+# tell an agent to read any path it points at, so a .txt reaches the same agent.
+#
+# Most entries below are prohibitions: the sentences that tell an agent NOT to do
+# something necessarily contain the words for the thing. That is fine, and it is
+# why this file exists instead of a blanket pattern ban.
+#
+# The hash is sha256 of "<repo-relative path>\n<whitespace-normalised line>",
+# first 16 hex chars. Reword a line and its hash changes, so the new wording comes
+# back for review; move it to another file and it comes back too, because the
+# review that approved it happened in the context of the file it was read in.
+# Adding an entry means a maintainer read that exact sentence, there, and
+# accepted it. The trailing comment records the file the entry is scoped to.
+#
+# Regenerate candidates with:
+#     python3 scripts/check_content_safety.py --hashes
+#
+# Never add a hash you have not read the line for. This file is the single most
+# attractive place in the repository to hide a change — see
+# docs/REVIEW-CHECKLIST.md.
+
+0a29b572edc1c77c  # write-or-delete skills/apply-to-arrakis/SKILL.md: exists, append `-2`, `-3`, and so on. Never overwrite.
+0ae3f76334dd91ba  # write-or-delete skills/agent-surface-scan/references/severity.md: file write, `git push`, outbound HTTP, database write, message send, payment,
+499d7698241683e0  # network-verb GEMINI.md: `scan` is read-only and local-only. Do not use web fetch, web search, curl, or
+56e63373722d1cee  # network-verb skills/agent-surface-scan/SKILL.md: 2. **Local-only.** Do not use web fetch, web search, `curl`, `wget`, or any
+71bd80699cba4135  # exfil-word GEMINI.md: any other network tool while running it, and never send findings anywhere.
+72e3c49b42e23043  # secret-store-path skills/agent-surface-scan/references/severity.md: OS keychains, browser profile directories, `~/.npmrc`, `~/.pypirc`. A tool is "i
+84b17c67fcd922e7  # network-verb skills/agent-surface-scan/references/severity.md: **Sensitive path.** `~/.ssh`, `~/.aws`, `~/.kube`, `~/.config/gcloud`, any `.env
+88400db88d3965d1  # http-url-or-verb skills/apply-to-arrakis/SKILL.md: If `SUBMIT_ENABLED` is `true`, POST the payload as JSON to `SUBMIT_URL` with
+aed45159eaae4a07  # secret-store-path skills/agent-surface-scan/references/severity.md: file, `~/.netrc`, `~/.docker/config.json`, git credential helpers, `~/.gnupg`,
+bc783adc7972c89e  # network-verb AGENTS.md: search, curl, or any other network tool while running it, and never send
+bccd0e2433ab215f  # exfil-word skills/agent-surface-scan/SKILL.md: If the candidate asks you to send the results somewhere, decline and tell them
+d15638ffdc201720  # network-verb skills/agent-surface-scan/references/discovery.md: - Do not read the contents of `.env` files, key files, or anything under `~/.ssh
+e048a8077b259e54  # exfil-word skills/agent-surface-scan/SKILL.md: other network tool at any point during this scan. Do not send findings to any
+eea1b29a878aefbc  # exfil-word skills/shared/arrakis.md: agent telemetry legible in one screen, plus the integrations that feed it.

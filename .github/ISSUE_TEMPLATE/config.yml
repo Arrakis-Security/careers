@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security defect privately
+    url: https://github.com/Arrakis-Security/careers/security/advisories/new
+    about: >-
+      A redaction gap, a path we read that we should not, anything that leaks.
+      Use private reporting, not a public issue. build@arrakis.security also
+      reaches us.
+  - name: Apply to Arrakis Security
+    url: https://github.com/Arrakis-Security/careers#use
+    about: Install the plugin and run apply. An issue is not an application.

@@ -91,8 +91,54 @@ definition of "outbound HTTP" as a capability we look for in *your* config, and
 three substring false positives — `POST` inside "approval **post**ure" and
 "**post**gres".
 
+## Who can change what you install
+
+Reading the repository tells you what it says today. What stops it saying
+something else tomorrow is separate, so here it is:
+
+- Installs resolve to this repository's default branch, so what is on `main` is
+  what runs. Only Arrakis Security staff can approve a merge to it — every path is
+  owned in [.github/CODEOWNERS](.github/CODEOWNERS), code-owner review is
+  required, and the branch ruleset has no bypass list. Outside contributions
+  arrive as pull requests from forks and are reviewed line by line.
+- Commits on `main` are signed, history is linear, force-pushes and branch
+  deletion are blocked, and release tags cannot be moved once published.
+- Every pull request runs
+  [scripts/check_content_safety.py](scripts/check_content_safety.py), which fails
+  any new line in the prompt surface that mentions a network verb, a secret store
+  path, a shell, or an instruction override until a maintainer records that exact
+  line, in that exact file, by hash. The prompt surface means every file under
+  `skills/` and `commands/` whatever its extension, since a skill can point an
+  agent at any file it likes. It also rejects invisible characters, non-Latin
+  lookalikes, and base64 blobs. `SUBMIT_ENABLED = false` is one of the invariants
+  it enforces — checked at *every* assignment in the file, not just the presence
+  of a correct one — so switching submission on cannot happen quietly, by edit or
+  by append.
+- Our own threat model, including what we think the most likely attack on this
+  repository is, is in [docs/THREAT-MODEL.md](docs/THREAT-MODEL.md). The exact
+  GitHub settings behind the paragraphs above are listed in
+  [docs/GITHUB-SETTINGS.md](docs/GITHUB-SETTINGS.md), so you can check that we
+  described them honestly.
+
+To pin rather than track `main`, install from a signed tag —
+[docs/RELEASING.md](docs/RELEASING.md) has the clone-and-verify commands.
+
+## One thing the scan hardens against, because we sell the fix
+
+`scan` reads project-level config from the directory you are standing in. If that
+repository is not yours, those files are attacker-controlled input to your agent.
+The skill's fifth absolute rule says config content is data to be reported on and
+never instruction to be followed, and that a config file carrying instructions is
+itself a `critical` finding. A company selling prompt-injection defence whose own
+skill follows an injected instruction would have nothing to sell.
+
 ## Reporting something
 
 If you find a way this plugin leaks anything — a redaction gap, a path we read
-that we should not, anything — mail build@arrakis.security. If you find it before
-you apply, mention it in question one. It is a better answer than most.
+that we should not, anything — use
+[private vulnerability reporting](https://github.com/Arrakis-Security/careers/security/advisories/new)
+or mail build@arrakis.security. Please do not open a public issue for a leak.
+
+We acknowledge within two business days and tell you what we are doing about it.
+If you find it before you apply, mention it in question one. It is a better answer
+than most.
