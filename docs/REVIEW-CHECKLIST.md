@@ -1,8 +1,9 @@
 # Maintainer review checklist
 
-For anyone in `@Arrakis-Security/security` about to approve a pull request. The
-contributor's checklist is in the pull request template; this is the reviewer's,
-and it assumes the contributor may have ticked boxes without meaning them.
+For anyone in `@Arrakis-Security/careers-maintainers` about to approve a pull
+request. The contributor's checklist is in the pull request template; this is
+the reviewer's, and it assumes the contributor may have ticked boxes without
+meaning them.
 
 Read the diff. Not the description of the diff.
 

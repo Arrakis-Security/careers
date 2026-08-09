@@ -43,11 +43,13 @@ Settings → Actions → General
 
 Teams
 
-- `security` — Arrakis Security staff who may approve merges here. Repository
-  role: Maintain (or Write). This is the team named in `.github/CODEOWNERS`, and
-  it owns every path. Membership is the whole access-control list for this
-  repository, so keep it to people you would trust to ship to a candidate's
-  laptop unreviewed.
+- `careers-maintainers` — Arrakis Security staff who may approve merges here.
+  Repository role: **Maintain or Write, and this is load-bearing** — GitHub
+  ignores a CODEOWNERS entry naming a team that only has Read, so code-owner
+  review silently becomes unsatisfiable rather than failing loudly. This is the
+  team named in `.github/CODEOWNERS`, and it owns every path. Membership is the
+  whole access-control list for this repository, so keep it to people you would
+  trust to ship to a candidate's laptop unreviewed.
 - Outsourced contributors get **no** team and **no** write access. They fork.
 - Worth doing once there is a second staff team: make it a co-owner of
   `.github/`, `scripts/`, `SECURITY.md` and the manifests, so disarming a
@@ -99,13 +101,14 @@ Rules to enable:
   - **Require conversation resolution before merging**.
 - **Require status checks to pass**, with "Require branches to be up to date"
   and the check named **`guardrails`** (the job in `.github/workflows/ci.yml`).
-- Block force pushes, and restrict who can dismiss reviews to `security`.
+- Block force pushes, and restrict who can dismiss reviews to
+  `careers-maintainers`.
 
 ## 4. Ruleset for release tags — **required if you tag**
 
 New **tag** ruleset, name `release-tags`, enforcement Active, target pattern
-`v*`. Empty bypass list. Enable Restrict creations (to `security`), Restrict
-updates, Restrict deletions, Require signed commits.
+`v*`. Empty bypass list. Enable Restrict creations (to `careers-maintainers`),
+Restrict updates, Restrict deletions, Require signed commits.
 
 Installs are pinned to tags, so an overwritable tag is an overwritable install.
 
@@ -155,7 +158,8 @@ issue templates, pull request template.
 Ten minutes, and it catches the drift that undoes all of the above:
 
 - [ ] Ruleset bypass list still empty
-- [ ] `security` membership still only staff; nobody added "temporarily"
+- [ ] `careers-maintainers` membership still only staff; nobody added
+      "temporarily", and the team still holds Write or Maintain
 - [ ] No outside collaborator holds write access
 - [ ] Org base permission still Read
 - [ ] Actions still cannot approve pull requests

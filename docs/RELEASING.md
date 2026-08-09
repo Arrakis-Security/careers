@@ -49,7 +49,8 @@ can pin to and a reviewer can point at.
    git push origin v0.1.0
    ```
 
-   Tag creation is restricted to `security`, and tags are not overwritable — see [GITHUB-SETTINGS.md](GITHUB-SETTINGS.md).
+   Tag creation is restricted to `careers-maintainers`, and tags are not
+   overwritable — see [GITHUB-SETTINGS.md](GITHUB-SETTINGS.md).
 
 6. **Write the release notes as a diff summary, not a changelog voice.** What
    changed in what the scan reads, what it prints, and what it claims. If nothing
