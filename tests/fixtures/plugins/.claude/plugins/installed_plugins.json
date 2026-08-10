@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "plugins": {
+    "tracker@example-marketplace": [
+      {
+        "scope": "user",
+        "installPath": ".claude/plugins/cache/example-marketplace/tracker/1.4.0",
+        "version": "1.4.0"
+      }
+    ],
+    "metrics@example-marketplace": [
+      {
+        "scope": "user",
+        "installPath": ".claude/plugins/cache/example-marketplace/metrics/0.9.2",
+        "version": "0.9.2"
+      }
+    ],
+    "notes@example-marketplace": [
+      {
+        "scope": "user",
+        "installPath": ".claude/plugins/cache/example-marketplace/notes/3.0.0",
+        "version": "3.0.0"
+      }
+    ]
+  }
+}

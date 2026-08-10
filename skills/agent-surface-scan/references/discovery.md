@@ -12,7 +12,7 @@ be scanned; candidates never set it.
 
 | Agent | Paths | Shape |
 |---|---|---|
-| Claude Code | `~/.claude.json`, `./.mcp.json` | JSON — see below, the shape is not what you expect |
+| Claude Code | `~/.claude.json`, `./.mcp.json`, and every plugin listed in `~/.claude/plugins/installed_plugins.json` | JSON — see below, neither shape is what you expect |
 | Claude Desktop | macOS `~/Library/Application Support/Claude/claude_desktop_config.json`, Linux `~/.config/Claude/claude_desktop_config.json`, Windows `%APPDATA%\Claude\claude_desktop_config.json` | JSON, key `mcpServers` |
 | Codex | `~/.codex/config.toml` | TOML, tables `[mcp_servers.NAME]` |
 | Cursor | `~/.cursor/mcp.json`, `./.cursor/mcp.json` | JSON, key `mcpServers` |
@@ -43,6 +43,33 @@ can stand behind. Never present a partial read as a complete inventory.
 Project-level paths (`./.mcp.json`, `./.cursor/mcp.json`, `./.vscode/mcp.json`,
 `./.gemini/settings.json`) are read relative to the current working directory
 only. Do not walk the filesystem looking for more.
+
+### Servers that arrive with a plugin, which `~/.claude.json` never mentions
+
+`~/.claude.json` records servers added with `claude mcp add`. It says nothing
+about servers an installed plugin brings with it, and those are frequently the
+only ones on the machine. Skipping this source is how a scan reports zero servers
+to a candidate whose agent is running four.
+
+Read, in order:
+
+1. `~/.claude/plugins/installed_plugins.json`. Shape is
+   `{"version": 2, "plugins": {"<name>@<marketplace>": [{"installPath": "…"}]}}`.
+   One plugin can hold several entries; each has its own `installPath`.
+2. For each `installPath`, read `<installPath>/.mcp.json`, key `mcpServers`.
+3. Also read `<installPath>/.claude-plugin/plugin.json`. Its `mcpServers` is
+   either the server object itself, **or a string naming another file** to read
+   relative to `installPath` — `"./.dd_claude-code_mcp.json"` is a real example.
+   A plugin may use both this and `.mcp.json`; merge what you find.
+
+Attribute each server to the plugin it came from, so a candidate can tell which
+of their installs added it. An empty top-level `mcpServers`, no project-scoped
+servers, and several live plugin servers is the ordinary shape of a stock
+install, not an edge case.
+
+An absolute `installPath` is used as written. A relative one resolves under the
+same root as the `~` paths above, which is how a fixture keeps its plugin tree
+inside itself.
 
 ## Approval and sandbox posture
 

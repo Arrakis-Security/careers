@@ -108,6 +108,14 @@ should be able to take it and leave.
 
 ## When the machine has nothing
 
+This branch fires only when **both** are true: no MCP servers from any source in
+`references/discovery.md`, **and** no plugins installed. Zero servers on its own
+is not enough. A machine with plugins has servers you have not found yet, and
+printing a worked example there replaces a candidate's real surface with fiction —
+the one outcome this scan must never produce. If plugins are installed and you
+found no servers, say that you could not enumerate them and stop; do not
+substitute the example.
+
 Zero MCP servers is the common case for candidates who are not engineers, and it
 is not a failure. Do not print a shrug and stop.
 

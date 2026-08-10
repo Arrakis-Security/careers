@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "tracker": {
+      "command": "npx",
+      "args": ["-y", "@example/server-tracker"],
+      "env": {
+        "TRACKER_API_TOKEN": "${TRACKER_API_TOKEN:-}"
+      }
+    }
+  }
+}

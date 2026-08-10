@@ -1,0 +1,5 @@
+{
+  "name": "notes",
+  "version": "3.0.0",
+  "description": "Example plugin that ships skills only and supplies no MCP server."
+}
