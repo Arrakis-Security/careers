@@ -87,6 +87,10 @@ Values that mean approval is off: Claude Code `defaultMode` of
 `sandbox_mode = "danger-full-access"`; Gemini `autoAccept: true` or an approval
 mode of `yolo`.
 
+Those are the unambiguous ones, not the whole test. `severity.md` says how to
+judge the rest of `permissions.allow`, entry by entry. An allow list containing
+none of the strings above is not thereby a clean one.
+
 ## Which agents are installed
 
 Presence alone is a low-severity inventory finding. Check for the directories

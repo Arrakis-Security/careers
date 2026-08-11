@@ -33,7 +33,8 @@ can pin to and a reviewer can point at.
 
    `validate_manifests.py` fails if any of these disagree, which is the point.
 
-3. **Re-run the three fixtures** and confirm each `EXPECTED.md` still holds,
+3. **Re-run every fixture** under `tests/fixtures/` and confirm each
+   `EXPECTED.md` still holds,
    including every "must never appear" line. Paste the outputs in the release pull
    request.
 

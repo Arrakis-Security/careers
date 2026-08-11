@@ -12,6 +12,14 @@ whose configuration declares no scope where the server type implies one. A
 filesystem server rooted at one project directory is scoped. The same server
 rooted at `~` is not.
 
+**Remote scope.** A server of `type: http` or `type: sse` names an endpoint and no
+filesystem root, so the vocabulary above does not describe it. Its reach is
+whatever its token or OAuth grant allows, and the config does not say. Do not call
+it scoped and do not call it unscoped: report a remote server whose scope is not
+determinable from config, name the credential that grants it, and judge the rest
+on the server's well-known identity. This is the shape most hosted servers take,
+and the shape our customers run.
+
 **Sensitive path.** `~/.ssh`, `~/.aws`, `~/.kube`, `~/.config/gcloud`, any `.env`
 file, `~/.netrc`, `~/.docker/config.json`, git credential helpers, `~/.gnupg`,
 OS keychains, browser profile directories, `~/.npmrc`, `~/.pypirc`. A tool is "in
@@ -35,9 +43,37 @@ output can reach an actuator in the same agent. Both halves are required. A fetc
 tool by itself is not a sink. A fetch tool in an agent that also has shell access
 is a sink, and that is the finding worth reporting.
 
+**Pre-approved actuator.** Enumerate `permissions.allow` and classify every entry
+against the actuator definition above. Do not pattern-match for
+`bypassPermissions` and `Bash(*)`: a hundred and fifty narrow-looking entries can
+carry the same actuators as one wildcard while matching neither string, and an
+allow list is where approval is bypassed one tool at a time. Judge the set, not
+the count. If any entry is an unscoped actuator, approval is bypassed for an
+unscoped actuator — `high`, and eligible as the actuator half of a `critical`.
+Entries that are genuinely scoped are inventory.
+
+Three classes read as narrow and are not:
+
+- An entry granting file edits under the agent's own configuration directory,
+  `Edit(~/.claude/**)` and its equivalents. That directory holds the file
+  governing every other permission, so the entry is a grant over the permission
+  system rather than one permission among a hundred.
+- An entry whose command installs packages, `Bash(npm install:*)` and its
+  equivalents. A package's install scripts run arbitrary code, so the entry is a
+  general shell by another name.
+- A `Skill(...)` entry. It pre-approves the whole effect of that skill, and a
+  skill is prose that can tell the agent to edit a file or run a command.
+  `Skill(update-config)` is the sharp example: the skill it approves edits
+  `settings.json`, which lands it in the first class by another route.
+
 **Credential breadth.** An environment variable or config value whose name
 matches `TOKEN`, `KEY`, `SECRET`, `PASSWORD`, `CREDENTIAL`, or `PAT`. Breadth is
 judged by the service and the scope named in the key, never by reading the value.
+
+These live in two places. A local server carries them in its `env` block; a
+remote one carries them in `headers`, and a machine whose servers are all remote
+has an empty `env` everywhere. Read both, or this tier never fires on exactly the
+servers most likely to reach production.
 
 Never characterise a scope the key name does not state. `GITHUB_PERSONAL_ACCESS_TOKEN`
 is a github credential of unstated scope — calling it "repo-wide" claims something

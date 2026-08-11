@@ -68,17 +68,20 @@ reviewer sees the sentence and its hash together.
 
 ## If you change the scan or the application skill
 
-Run all three fixtures and check the output against each `EXPECTED.md`, including
-every "must never appear" line:
+Run every fixture under `tests/fixtures/` and check the output against each
+`EXPECTED.md`, including every "must never appear" line:
 
 ```bash
-ARRAKIS_SCAN_ROOT=tests/fixtures/empty     # then invoke the scan
+ARRAKIS_SCAN_ROOT=tests/fixtures/empty        # then invoke the scan
 ARRAKIS_SCAN_ROOT=tests/fixtures/engineer
+ARRAKIS_SCAN_ROOT=tests/fixtures/permissions
+ARRAKIS_SCAN_ROOT=tests/fixtures/plugins
 ARRAKIS_SCAN_ROOT=tests/fixtures/secrets
 ```
 
 These are judged by reading, not by an assertion library — the output is prose. A
-pull request that touches the skills without three pasted outputs is not ready.
+pull request that touches the skills without one pasted output per fixture is not
+ready.
 
 `tests/fixtures/` contains realistic-looking fake credentials on purpose. Never
 replace them with placeholders: their whole job is to make a redaction failure

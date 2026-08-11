@@ -44,10 +44,10 @@ Tick every line, or say why it does not apply.
 
 ## If it touches the scan or the application skill
 
-- [ ] Run against `tests/fixtures/empty`, `tests/fixtures/engineer`, and
-      `tests/fixtures/secrets` with `ARRAKIS_SCAN_ROOT` set, and confirm each
-      `EXPECTED.md` still holds — including every "must never appear" line
-- [ ] Paste the three outputs, or say which you could not run and why
+- [ ] Run against every fixture under `tests/fixtures/` with `ARRAKIS_SCAN_ROOT`
+      set, and confirm each `EXPECTED.md` still holds — including every
+      "must never appear" line
+- [ ] Paste one output per fixture, or say which you could not run and why
 
 ## Anything you are unsure about
 
