@@ -3,6 +3,25 @@
 Pull requests are welcome, including from people who do not work here. Read this
 first — it is short, and it explains a constraint that is unusual.
 
+## What this plugin is for
+
+A taste of what Arrakis does, built to interest people in working here. It is not
+agent governance and completeness is not the goal, which rules more out than it
+sounds like:
+
+- **Two jobs: add what is genuinely missing, and make what we claim match what we
+  do.** A change that does neither is out of scope however good it is.
+- **A mismatch can be fixed from either end, and the claim is usually the cheaper
+  one.** Growing the plugin to satisfy a promise we did not need to make is how
+  scope escapes.
+- **The run stays short.** Every source added means more reads, more findings, and
+  more output. Length is a defect here, not thoroughness.
+- **Nothing proprietary ships.** This repository is public and the detection
+  method is the asset.
+- **Admitting a gap beats covering it.** Saying plainly what we read, what we
+  cannot see, and what never leaves the machine is the point, and it costs no
+  runtime.
+
 ## The constraint
 
 This repository contains no code. It contains instructions that a candidate's own

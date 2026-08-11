@@ -40,6 +40,14 @@ This is the code-execution surface. For each added or changed sentence, ask:
 - [ ] Would this sentence still be safe if the file it describes were written by
       an attacker? That is the actual runtime condition.
 - [ ] Voice: no exclamation marks, no emoji, no encouragement, no marketing.
+- [ ] Scope, per `CONTRIBUTING.md` "What this plugin is for": does this add
+      something genuinely missing, or align a claim with behaviour? A change that
+      widens the scan past what the page promises is out of scope even when it
+      finds real problems — decide to advertise it first, then build it.
+- [ ] Length: does the run get longer, and is the finding worth it? Ten lines of
+      guidance for one line of output is a rewrite, not an approval.
+- [ ] Does it publish more of *how we rank* than the teaser needs?
+      `references/severity.md` is the file to watch.
 
 ## If it touches the application skill
 

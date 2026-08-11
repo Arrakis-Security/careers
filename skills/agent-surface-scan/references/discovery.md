@@ -46,36 +46,42 @@ only. Do not walk the filesystem looking for more.
 
 ### Servers that arrive with a plugin, which `~/.claude.json` never mentions
 
-`~/.claude.json` records servers added with `claude mcp add`. It says nothing
-about servers an installed plugin brings with it, and those are frequently the
-only ones on the machine. Skipping this source is how a scan reports zero servers
-to a candidate whose agent is running four.
+`~/.claude.json` records servers added with `claude mcp add` and nothing an
+installed plugin brings with it. On a stock install those plugin servers are often
+the only ones there, which is how a scan reports zero to a candidate whose agent
+is running four.
 
 Read, in order:
 
-1. `~/.claude/plugins/installed_plugins.json`. Shape is
-   `{"version": 2, "plugins": {"<name>@<marketplace>": [{"installPath": "…"}]}}`.
-   One plugin can hold several entries; each has its own `installPath`.
-2. For each `installPath`, read `<installPath>/.mcp.json`, key `mcpServers`.
-3. Also read `<installPath>/.claude-plugin/plugin.json`. Its `mcpServers` is
-   either the server object itself, **or a string naming another file** to read
-   relative to `installPath` — `"./.dd_claude-code_mcp.json"` is a real example.
-   A plugin may use both this and `.mcp.json`; merge what you find.
+1. `~/.claude/plugins/installed_plugins.json`, shape
+   `{"plugins": {"<name>@<marketplace>": [{"installPath": "…"}]}}`. One plugin can
+   hold several entries, each with its own `installPath`.
+2. `<installPath>/.mcp.json`, key `mcpServers`.
+3. `<installPath>/.claude-plugin/plugin.json`, key `mcpServers` — either the
+   server object itself **or a string naming another file** to read relative to
+   `installPath`. A plugin may use both sources; merge them.
 
-Attribute each server to the plugin it came from, so a candidate can tell which
-of their installs added it. An empty top-level `mcpServers`, no project-scoped
-servers, and several live plugin servers is the ordinary shape of a stock
-install, not an edge case.
+Name the plugin each server came from. A relative `installPath` resolves under the
+same root as the `~` paths above; an absolute one is used as written.
 
-An absolute `installPath` is used as written. A relative one resolves under the
-same root as the `~` paths above, which is how a fixture keeps its plugin tree
-inside itself.
+### What this scan cannot see
+
+Two things are out of reach of any local read, and both must be said in one line
+rather than passed off as a clean result:
+
+- **Account connectors.** Integrations authorised in the account, not on disk.
+  They reach the agent as tools and appear in none of the paths above.
+- **Antigravity.** Advertised as a supported host, and its config paths are not in
+  the table because we have not verified them against a real install.
+
+Silence reads as completeness. Naming a gap costs one line and is worth more to a
+candidate than pretending to cover it.
 
 ## Approval and sandbox posture
 
 | Agent | Path | What to read |
 |---|---|---|
-| Claude Code | `~/.claude/settings.json`, `~/.claude/settings.local.json`, `./.claude/settings.json`, `./.claude/settings.local.json` | `permissions.allow`, `permissions.deny`, `permissions.defaultMode`, `enableAllProjectMcpServers` |
+| Claude Code | `~/.claude/settings.json`, `~/.claude/settings.local.json`, `./.claude/settings.json`, `./.claude/settings.local.json` | `permissions.allow`, `permissions.deny`, `permissions.defaultMode`, `enableAllProjectMcpServers`, `env` |
 | Codex | `~/.codex/config.toml` | `approval_policy`, `sandbox_mode`, `sandbox_permissions`, trusted project entries |
 | Cursor | `~/.cursor/mcp.json` and Cursor settings | auto-run / auto-approve toggles |
 | Gemini CLI | `~/.gemini/settings.json` | `autoAccept`, approval mode |
@@ -87,9 +93,11 @@ Values that mean approval is off: Claude Code `defaultMode` of
 `sandbox_mode = "danger-full-access"`; Gemini `autoAccept: true` or an approval
 mode of `yolo`.
 
-Those are the unambiguous ones, not the whole test. `severity.md` says how to
-judge the rest of `permissions.allow`, entry by entry. An allow list containing
-none of the strings above is not thereby a clean one.
+Those are the unambiguous ones, not the whole test — an allow list carrying none
+of these strings is not thereby clean. `severity.md` says how to judge the rest.
+
+Read the `env` block of those same files for credential key names only, never
+values. `severity.md`'s credential tier is built on them.
 
 ## Which agents are installed
 
@@ -106,7 +114,8 @@ the config paths above. Do not run version commands; reading is enough.
 - Do not read the contents of `.env` files, key files, or anything under `~/.ssh`.
   Their *existence and reachability* is the finding. Their contents are not.
 - Read the keys you need, not whole files, where the format lets you. These
-  configs can be megabytes.
+  configs can be megabytes, and rule 7 in `SKILL.md` is why size is the smaller
+  reason.
 - If any read was truncated or any path was unreadable, say so in the output.
   Silence implies completeness, and an inventory that quietly missed something is
   worse than one that admits a gap.
