@@ -12,7 +12,7 @@ be scanned; candidates never set it.
 
 | Agent | Paths | Shape |
 |---|---|---|
-| Claude Code | `~/.claude.json`, `./.mcp.json` | JSON — see below, the shape is not what you expect |
+| Claude Code | `~/.claude.json`, `./.mcp.json`, and every plugin listed in `~/.claude/plugins/installed_plugins.json` | JSON — see below, neither shape is what you expect |
 | Claude Desktop | macOS `~/Library/Application Support/Claude/claude_desktop_config.json`, Linux `~/.config/Claude/claude_desktop_config.json`, Windows `%APPDATA%\Claude\claude_desktop_config.json` | JSON, key `mcpServers` |
 | Codex | `~/.codex/config.toml` | TOML, tables `[mcp_servers.NAME]` |
 | Cursor | `~/.cursor/mcp.json`, `./.cursor/mcp.json` | JSON, key `mcpServers` |
@@ -44,11 +44,31 @@ Project-level paths (`./.mcp.json`, `./.cursor/mcp.json`, `./.vscode/mcp.json`,
 `./.gemini/settings.json`) are read relative to the current working directory
 only. Do not walk the filesystem looking for more.
 
+### Servers that arrive with a plugin, which `~/.claude.json` never mentions
+
+`~/.claude.json` records servers added with `claude mcp add` and nothing an
+installed plugin brings with it. On a stock install those plugin servers are often
+the only ones there, which is how a scan reports zero to a candidate whose agent
+is running four.
+
+Read, in order:
+
+1. `~/.claude/plugins/installed_plugins.json`, shape
+   `{"plugins": {"<name>@<marketplace>": [{"installPath": "…"}]}}`. One plugin can
+   hold several entries, each with its own `installPath`.
+2. `<installPath>/.mcp.json`, key `mcpServers`.
+3. `<installPath>/.claude-plugin/plugin.json`, key `mcpServers` — either the
+   server object itself **or a string naming another file** to read relative to
+   `installPath`. A plugin may use both sources; merge them.
+
+Name the plugin each server came from. A relative `installPath` resolves under the
+same root as the `~` paths above; an absolute one is used as written.
+
 ## Approval and sandbox posture
 
 | Agent | Path | What to read |
 |---|---|---|
-| Claude Code | `~/.claude/settings.json`, `~/.claude/settings.local.json`, `./.claude/settings.json`, `./.claude/settings.local.json` | `permissions.allow`, `permissions.deny`, `permissions.defaultMode`, `enableAllProjectMcpServers` |
+| Claude Code | `~/.claude/settings.json`, `~/.claude/settings.local.json`, `./.claude/settings.json`, `./.claude/settings.local.json` | `permissions.allow`, `permissions.deny`, `permissions.defaultMode`, `enableAllProjectMcpServers`, `env` |
 | Codex | `~/.codex/config.toml` | `approval_policy`, `sandbox_mode`, `sandbox_permissions`, trusted project entries |
 | Cursor | `~/.cursor/mcp.json` and Cursor settings | auto-run / auto-approve toggles |
 | Gemini CLI | `~/.gemini/settings.json` | `autoAccept`, approval mode |
@@ -59,6 +79,12 @@ Values that mean approval is off: Claude Code `defaultMode` of
 `Bash`, or `*`; Codex `approval_policy = "never"`; Codex
 `sandbox_mode = "danger-full-access"`; Gemini `autoAccept: true` or an approval
 mode of `yolo`.
+
+Those are the unambiguous ones, not the whole test — an allow list carrying none
+of these strings is not thereby clean. `severity.md` says how to judge the rest.
+
+Read the `env` block of those same files for credential key names only, never
+values. `severity.md`'s credential tier is built on them.
 
 ## Which agents are installed
 
@@ -75,7 +101,8 @@ the config paths above. Do not run version commands; reading is enough.
 - Do not read the contents of `.env` files, key files, or anything under `~/.ssh`.
   Their *existence and reachability* is the finding. Their contents are not.
 - Read the keys you need, not whole files, where the format lets you. These
-  configs can be megabytes.
+  configs can be megabytes, and rule 7 in `SKILL.md` is why size is the smaller
+  reason.
 - If any read was truncated or any path was unreadable, say so in the output.
   Silence implies completeness, and an inventory that quietly missed something is
   worse than one that admits a gap.

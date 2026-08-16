@@ -12,6 +12,12 @@ whose configuration declares no scope where the server type implies one. A
 filesystem server rooted at one project directory is scoped. The same server
 rooted at `~` is not.
 
+**Remote scope.** A server of `type: http` or `type: sse` names an endpoint and no
+filesystem root. Its reach is whatever its token or OAuth grant allows, and the
+config does not say. Call it neither scoped nor unscoped: report a remote server
+whose scope is not determinable from config, name the credential that grants it,
+and judge the rest on the server's well-known identity.
+
 **Sensitive path.** `~/.ssh`, `~/.aws`, `~/.kube`, `~/.config/gcloud`, any `.env`
 file, `~/.netrc`, `~/.docker/config.json`, git credential helpers, `~/.gnupg`,
 OS keychains, browser profile directories, `~/.npmrc`, `~/.pypirc`. A tool is "in
@@ -35,9 +41,25 @@ output can reach an actuator in the same agent. Both halves are required. A fetc
 tool by itself is not a sink. A fetch tool in an agent that also has shell access
 is a sink, and that is the finding worth reporting.
 
+**Pre-approved actuator.** An allow list is where approval is bypassed one tool at
+a time, so judge what its entries grant rather than matching for
+`bypassPermissions` and `Bash(*)`. Many narrow entries can carry the same
+actuators as one wildcard while matching neither string. Three read as narrow and
+are not: edits under the agent's own config directory (`Edit(~/.claude/**)` —
+that is the file governing every other permission), package installs
+(`Bash(npm install:*)` — install scripts run arbitrary code), and `Skill(...)`,
+which pre-approves whatever that skill does.
+
+One entry of that kind is approval bypassed for an unscoped actuator: `high`, and
+eligible as the actuator half of a `critical`. Name the entries that carry it, not
+the list.
+
 **Credential breadth.** An environment variable or config value whose name
 matches `TOKEN`, `KEY`, `SECRET`, `PASSWORD`, `CREDENTIAL`, or `PAT`. Breadth is
 judged by the service and the scope named in the key, never by reading the value.
+
+Read both places these live: `env` for a local server, `headers` for a remote one.
+A machine whose servers are all remote has an empty `env` everywhere.
 
 Never characterise a scope the key name does not state. `GITHUB_PERSONAL_ACCESS_TOKEN`
 is a github credential of unstated scope — calling it "repo-wide" claims something

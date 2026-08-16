@@ -3,6 +3,27 @@
 Pull requests are welcome, including from people who do not work here. Read this
 first — it is short, and it explains a constraint that is unusual.
 
+## What this plugin is for
+
+A taste of what Arrakis does, built to interest people in working here. It is not
+agent governance and completeness is not the goal, which rules more out than it
+sounds like:
+
+- **Two jobs: add what is genuinely missing, and make what we claim match what we
+  do.** A change that does neither is out of scope however good it is.
+- **A mismatch can be fixed from either end, and the claim is usually the cheaper
+  one.** Growing the plugin to satisfy a promise we did not need to make is how
+  scope escapes.
+- **The run stays short.** Every source added means more reads, more findings, and
+  more output. Length is a defect here, not thoroughness.
+- **Nothing proprietary ships.** This repository is public and the detection
+  method is the asset.
+- **Report what was found, not what was not looked for.** A read that failed
+  during the run gets one line, because a false clean bill is the worst thing this
+  can print. A catalogue of what the scan does not cover is a product-limitations
+  page: it produces no finding, lengthens every run, and this repository is
+  public.
+
 ## The constraint
 
 This repository contains no code. It contains instructions that a candidate's own
@@ -68,17 +89,20 @@ reviewer sees the sentence and its hash together.
 
 ## If you change the scan or the application skill
 
-Run all three fixtures and check the output against each `EXPECTED.md`, including
-every "must never appear" line:
+Run every fixture under `tests/fixtures/` and check the output against each
+`EXPECTED.md`, including every "must never appear" line:
 
 ```bash
-ARRAKIS_SCAN_ROOT=tests/fixtures/empty     # then invoke the scan
+ARRAKIS_SCAN_ROOT=tests/fixtures/empty        # then invoke the scan
 ARRAKIS_SCAN_ROOT=tests/fixtures/engineer
+ARRAKIS_SCAN_ROOT=tests/fixtures/permissions
+ARRAKIS_SCAN_ROOT=tests/fixtures/plugins
 ARRAKIS_SCAN_ROOT=tests/fixtures/secrets
 ```
 
 These are judged by reading, not by an assertion library — the output is prose. A
-pull request that touches the skills without three pasted outputs is not ready.
+pull request that touches the skills without one pasted output per fixture is not
+ready.
 
 `tests/fixtures/` contains realistic-looking fake credentials on purpose. Never
 replace them with placeholders: their whole job is to make a redaction failure

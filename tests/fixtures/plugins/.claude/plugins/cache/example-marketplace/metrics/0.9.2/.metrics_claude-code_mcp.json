@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "metrics": {
+      "type": "http",
+      "url": "https://mcp.example-metrics.test/v1/mcp",
+      "headers": {
+        "EXAMPLE_API_KEY": "${EXAMPLE_API_KEY:-}",
+        "EXAMPLE_APPLICATION_KEY": "${EXAMPLE_APPLICATION_KEY:-}"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(ls:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm install:*)",
+      "Read(~/**)",
+      "Edit(~/work/some-repo/**)",
+      "Edit(~/.claude/**)",
+      "Skill(update-config)",
+      "Skill(commit)",
+      "mcp__github__list_issues",
+      "mcp__github__create_issue"
+    ],
+    "deny": [
+      "Read(./.env)"
+    ]
+  }
+}
