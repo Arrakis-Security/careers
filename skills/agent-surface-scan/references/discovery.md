@@ -64,19 +64,6 @@ Read, in order:
 Name the plugin each server came from. A relative `installPath` resolves under the
 same root as the `~` paths above; an absolute one is used as written.
 
-### What this scan cannot see
-
-Two things are out of reach of any local read, and both must be said in one line
-rather than passed off as a clean result:
-
-- **Account connectors.** Integrations authorised in the account, not on disk.
-  They reach the agent as tools and appear in none of the paths above.
-- **Antigravity.** Advertised as a supported host, and its config paths are not in
-  the table because we have not verified them against a real install.
-
-Silence reads as completeness. Naming a gap costs one line and is worth more to a
-candidate than pretending to cover it.
-
 ## Approval and sandbox posture
 
 | Agent | Path | What to read |

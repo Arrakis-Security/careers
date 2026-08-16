@@ -48,6 +48,9 @@ This is the code-execution surface. For each added or changed sentence, ask:
       guidance for one line of output is a rewrite, not an approval.
 - [ ] Does it publish more of *how we rank* than the teaser needs?
       `references/severity.md` is the file to watch.
+- [ ] Does it state what the scan does **not** cover? Reporting a read that failed
+      during the run is right; cataloguing what we never attempt is a
+      limitations page, on a public repository, for no finding.
 
 ## If it touches the application skill
 

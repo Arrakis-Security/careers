@@ -18,9 +18,11 @@ sounds like:
   more output. Length is a defect here, not thoroughness.
 - **Nothing proprietary ships.** This repository is public and the detection
   method is the asset.
-- **Admitting a gap beats covering it.** Saying plainly what we read, what we
-  cannot see, and what never leaves the machine is the point, and it costs no
-  runtime.
+- **Report what was found, not what was not looked for.** A read that failed
+  during the run gets one line, because a false clean bill is the worst thing this
+  can print. A catalogue of what the scan does not cover is a product-limitations
+  page: it produces no finding, lengthens every run, and this repository is
+  public.
 
 ## The constraint
 
